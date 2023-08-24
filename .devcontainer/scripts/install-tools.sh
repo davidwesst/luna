@@ -21,3 +21,4 @@ evcxr_jupyter --install
 # TODO: use a requirements.txt for this
 pip install langchain[llms]
 pip install openai
+pip install pydantic
