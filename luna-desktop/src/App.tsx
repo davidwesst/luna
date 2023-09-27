@@ -14,7 +14,10 @@ function App() {
   return (
     <section className="container">
       <ConversationOutput message={outputMessage}></ConversationOutput>
-      <ConversationInputForm></ConversationInputForm>
+      <ConversationInputForm
+        onSend={(s: string) => setOutputMessage(s)}
+        >
+      </ConversationInputForm>
     </section>
   );
 }
