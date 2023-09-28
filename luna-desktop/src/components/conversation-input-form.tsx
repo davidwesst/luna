@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent } from "react";
+import { ChangeEvent, FunctionComponent, useState } from "react";
 import { Button, ControlGroup, InputGroup } from "@blueprintjs/core";
 
 interface ConversationInputFormProps {
@@ -6,19 +6,21 @@ interface ConversationInputFormProps {
 }
 
 const ConversationInputForm : FunctionComponent<ConversationInputFormProps> = (({ onSend }) => {
+    const [messageValue, setMessageValue] = useState("");
+
     return (
         <ControlGroup vertical={false}>
             <InputGroup 
                 fill={true}
                 large={true}
                 placeholder="Enter message text here..."
-                onChange={(e:ChangeEvent) => onSend("Text change!")}>
+                onChange={(e: ChangeEvent<HTMLInputElement>) => setMessageValue(e.currentTarget.value)}>
             </InputGroup>
             <Button
                 icon="send-message"
                 intent="primary"
                 large={true}
-                onClick={() => onSend("Hello!")}>
+                onClick={() => onSend(messageValue)}>
             </Button>
         </ControlGroup>
     );
