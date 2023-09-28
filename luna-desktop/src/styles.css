@@ -1,11 +1,12 @@
 @import "../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 @import "../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
 
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 :root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -13,9 +14,26 @@
     -webkit-text-size-adjust: 100%;
 }
 
+#root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
 .container {
-    justify-self: center;
-    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
     width: 90vw; 
     max-width: 1280px;
+    height: 90vh;
+}
+
+.container #conversation_output {
+    flex-grow: 1;
+}
+
+.container #conversation_input {
+    height: 10vh;
 }
