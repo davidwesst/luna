@@ -12,11 +12,10 @@ function App() {
 
   return (
     <section className="container">
-      <ConversationOutput message={outputMessage}></ConversationOutput>
+      <ConversationOutput message={outputMessage} />
       <ConversationInputForm
         onSend={(s: string) => setOutputMessage(s)}
-        >
-      </ConversationInputForm>
+        />
     </section>
   );
 }
