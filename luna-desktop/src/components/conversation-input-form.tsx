@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useState } from "react";
-import { Button, ControlGroup, InputGroup, TextArea } from "@blueprintjs/core";
+import { Button, ControlGroup, TextArea } from "@blueprintjs/core";
 
 interface ConversationInputFormProps {
    onSend: (s: string) => void; 
