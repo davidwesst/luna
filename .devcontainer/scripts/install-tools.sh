@@ -21,3 +21,15 @@ evcxr_jupyter --install
 # TODO: use a requirements.txt for this
 pip install langchain[llms]
 pip install openai
+
+# install prerequisites for tauri
+DEBIAN_FRONTEND=noninteractive sudo apt update
+DEBIAN_FRONTEND=noninteractive sudo apt install libwebkit2gtk-4.0-dev \
+    build-essential \
+    curl \
+    wget \
+    file \
+    libssl-dev \
+    libgtk-3-dev \
+    libayatana-appindicator3-dev \
+    librsvg2-dev
