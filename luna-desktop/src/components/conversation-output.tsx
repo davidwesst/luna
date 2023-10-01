@@ -1,13 +1,20 @@
 import { FunctionComponent } from "react";
+import Conversation from "../models/conversation";
 
 interface ConversationOutputProps {
-    message: string;
+    conversation: Conversation;
 }
 
-const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ message } : ConversationOutputProps) => {
+const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conversation } : ConversationOutputProps) => {
+    const messageLogItems = conversation.messageLog.map((msg, index) => {
+        return (
+            <article key={index}>{msg.user} : {msg.message}</article>
+        )
+    });
+
     return (
         <div id="conversation_output">
-            {message}
+            {messageLogItems}
         </div>
     );
 });
