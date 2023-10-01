@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, useState } from "react";
+import { ChangeEvent, FunctionComponent, KeyboardEvent, useState } from "react";
 import { Button, ControlGroup, TextArea } from "@blueprintjs/core";
 
 interface ConversationInputFormProps {
@@ -8,20 +8,34 @@ interface ConversationInputFormProps {
 const ConversationInputForm : FunctionComponent<ConversationInputFormProps> = (({ onSend }) => {
     const [messageValue, setMessageValue] = useState("");
 
+    const handleKeyboardEvent = (e: KeyboardEvent) => {
+        if(e.ctrlKey && e.key === "Enter") {
+            submitMessage();
+        }
+    }
+
+    const submitMessage = () => {
+        onSend(messageValue);
+    }
+
     return (
-        <ControlGroup id="conversation_input" vertical={false}>
-            <TextArea
-                fill={true}
-                placeholder="Enter message text here..."
-                onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageValue(e.currentTarget.value)}
-                />
-            <Button
-                icon="send-message"
-                intent="primary"
-                large={true}
-                onClick={() => onSend(messageValue)}>
-            </Button>
-        </ControlGroup>
+        <>
+            <ControlGroup id="conversation_input" vertical={false}>
+                <TextArea
+                    fill={true}
+                    placeholder="Enter message text here..."
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageValue(e.currentTarget.value)}
+                    onKeyDown={handleKeyboardEvent}
+                    />
+                <Button
+                    icon="send-message"
+                    intent="primary"
+                    large={true}
+                    onClick={() => submitMessage()}>
+                </Button>
+            </ControlGroup>
+            <span>Pro Tip: Press Ctrl + Enter to submit without a click.</span>
+        </>
     );
 });
 export default ConversationInputForm;
