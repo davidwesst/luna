@@ -37,3 +37,10 @@ html, body {
 .container #conversation_input {
     height: 10vh;
 }
+
+.convo_header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
