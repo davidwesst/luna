@@ -8,7 +8,10 @@ interface ConversationOutputProps {
 const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conversation } : ConversationOutputProps) => {
     const messageLogItems = conversation.messageLog.map((msg, index) => {
         return (
-            <article key={index}>{msg.user} : {msg.message}</article>
+            <article key={index}>
+                <span>{msg.user} : </span>
+                <span>{msg.message}</span>
+            </article>
         )
     });
 
