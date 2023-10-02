@@ -23,8 +23,8 @@ pip install langchain[llms]
 pip install openai
 
 # install prerequisites for tauri
-DEBIAN_FRONTEND=noninteractive sudo apt update
-DEBIAN_FRONTEND=noninteractive sudo apt install libwebkit2gtk-4.0-dev \
+DEBIAN_FRONTEND=noninteractive sudo apt update -y
+DEBIAN_FRONTEND=noninteractive sudo apt install -y libwebkit2gtk-4.0-dev \
     build-essential \
     curl \
     wget \
