@@ -16,6 +16,7 @@ const ConversationInputForm : FunctionComponent<ConversationInputFormProps> = ((
 
     const submitMessage = () => {
         onSend(messageValue);
+        setMessageValue("");
     }
 
     return (
@@ -24,6 +25,7 @@ const ConversationInputForm : FunctionComponent<ConversationInputFormProps> = ((
                 <TextArea
                     fill={true}
                     placeholder="Enter message text here..."
+                    value={messageValue}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageValue(e.currentTarget.value)}
                     onKeyDown={handleKeyboardEvent}
                     />

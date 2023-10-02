@@ -1,18 +1,30 @@
-import { FunctionComponent } from "react";
-import Conversation from "../models/conversation";
+import { FunctionComponent, useEffect, useState } from "react";
+import { BaseChatMessageHistory, BaseMessage } from "langchain/schema";
 
 interface ConversationOutputProps {
-    conversation: Conversation;
+    conversation: BaseChatMessageHistory;
 }
 
 const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conversation } : ConversationOutputProps) => {
-    const messageLogItems = conversation.messageLog.map((msg, index) => {
-        return (
-            <article key={index}>
-                <span>{msg.user} : </span>
-                <span>{msg.message}</span>
-            </article>
-        )
+    const [messages, setMessages] = useState(new Array<BaseMessage>());
+
+    useEffect(()=> {
+        const getMessages = async () => {
+            const messages = await conversation.getMessages();
+            setMessages(messages);
+        }
+        getMessages();
+    },[conversation]);
+
+    const messageLogItems = messages.map((msg, index) => {
+        if(msg._getType() !== "system") {
+            return (
+                <article key={index}>
+                    <span>{msg.name} : </span>
+                    <span>{msg.content}</span>
+                </article>
+            )
+        }
     });
 
     return (

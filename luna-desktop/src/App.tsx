@@ -4,31 +4,37 @@ import "./App.css";
 
 import ConversationOutput from "./components/conversation-output";
 import ConversationInputForm from "./components/conversation-input-form";
-import Conversation from "./models/conversation";
 
 import { Button, Drawer, FormGroup, InputGroup, Slider } from "@blueprintjs/core";
 
-import { ChatOpenAI } from "langchain/chat_models/openai";
 import { ConversationChain } from "langchain/chains";
-import { BaseMessage, HumanMessage } from "langchain/schema";
+import { SystemMessage } from "langchain/schema";
+import { BufferMemory, ChatMessageHistory } from "langchain/memory";
+import { OpenAI } from "langchain/llms/openai";
 
 function App() {
-  const [outputMessage, setOutputMessage] = useState(new Conversation("Output message...", "Convo Title"));
+  const [conversationMemory, setConverstaionMemory] = useState(new BufferMemory({
+    chatHistory: new ChatMessageHistory([
+      new SystemMessage("You are a helpful AI assistant named Luna, named after the cat from the anime series Sailor Moon. You are meant to help your user, like Luna would help Usagi, and occasionally make a reference to the point that you are an AI in the form of a cat.")
+    ])
+  }));
+  const conversationTitle = "Convo Title"; // TODO: change to useState to change title
   const [showConfigDialogue, setShowConfigDialogue] = useState(false);
   const [openaiApiKey, setOpenaiApiKey] = useState("");
   const [temperature, setTemperature] = useState(1.3);
 
-  const onSendInput = async (s: string) => {
-    const chatModel = new ChatOpenAI({
+  const handleSendMessage = async (message: string) => {
+    const model = new OpenAI({
       openAIApiKey: openaiApiKey,
       temperature: temperature
     });
-    const messages : Array<BaseMessage> = [
-      new HumanMessage({ content: s })
-    ];
-    const chatResult = await chatModel.predictMessages(messages);
+    const memory = conversationMemory;
 
-    setOutputMessage(new Conversation(chatResult.content, "Convo Title"));
+    const chain = new ConversationChain({ llm: model, memory: memory });
+    await chain.run(message);
+    setConverstaionMemory(new BufferMemory({
+      chatHistory: memory.chatHistory
+    }));
   }
 
   const toggleConfigDialog = () => {
@@ -38,12 +44,12 @@ function App() {
   return (
     <section className="container">
       <header className="convo_header">
-          <h1 className="convo_title">{outputMessage.title}</h1>
+          <h1 className="convo_title">{conversationTitle}</h1>
           <Button icon="wrench" onClick={toggleConfigDialog} />
       </header>
-      <ConversationOutput conversation={outputMessage} />
+      <ConversationOutput conversation={conversationMemory.chatHistory} />
       <ConversationInputForm
-        onSend={onSendInput}
+        onSend={handleSendMessage}
         />
       <Drawer isOpen={showConfigDialogue} onClose={toggleConfigDialog}>
         <FormGroup
