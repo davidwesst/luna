@@ -1,13 +1,11 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { BaseChatMessageHistory, BaseMessage, MessageType } from "langchain/schema";
+import { BaseMessage, MessageType } from "langchain/schema";
 
 interface ConversationOutputProps {
-    conversation: BaseChatMessageHistory;
+    messages: Array<BaseMessage>;
 }
 
-const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conversation } : ConversationOutputProps) => {
-    const [messages, setMessages] = useState(new Array<BaseMessage>());
-
+const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ messages } : ConversationOutputProps) => {
     const getDisplayName = (messageType: MessageType) => {
         let displayName = "Unknown";
         switch (messageType) {
@@ -32,14 +30,6 @@ const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conv
 
         return displayName;
     }
-
-    useEffect(()=> {
-        const getMessages = async () => {
-            const messages = await conversation.getMessages();
-            setMessages(messages);
-        }
-        getMessages();
-    },[conversation]);
 
     const messageLogItems = messages.map((msg, index) => {
         const messageType = msg._getType();
