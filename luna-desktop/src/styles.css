@@ -1,10 +1,6 @@
 @import "../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 @import "../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
 
-html, body {
-    margin: 0;
-    padding: 0;
-}
 
 :root {
     font-synthesis: none;
@@ -12,6 +8,13 @@ html, body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background-color: #fafcfb;
 }
 
 #root {
@@ -35,6 +38,10 @@ html, body {
     overflow: auto;
 }
 
+.container #conversation_output > *:nth-child(even) {
+    background-color: #93e1f4;
+}
+
 .container #conversation_input {
     height: 10vh;
 }
@@ -44,4 +51,17 @@ html, body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+}
+
+.message_item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0.5em 0;
+    padding: 0.5em;
+}
+
+.message_item .sender {
+    min-width: 100px;
+    font-weight: bold;
 }

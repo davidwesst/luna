@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { BaseChatMessageHistory, BaseMessage } from "langchain/schema";
+import { BaseChatMessageHistory, BaseMessage, MessageType } from "langchain/schema";
 
 interface ConversationOutputProps {
     conversation: BaseChatMessageHistory;
@@ -7,6 +7,31 @@ interface ConversationOutputProps {
 
 const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conversation } : ConversationOutputProps) => {
     const [messages, setMessages] = useState(new Array<BaseMessage>());
+
+    const getDisplayName = (messageType: MessageType) => {
+        let displayName = "Unknown";
+        switch (messageType) {
+            case "ai":
+                displayName = "Luna";
+                break;
+            case "function":
+                displayName = "Luna";
+                break;
+            case "generic":
+                displayName = "Generic";
+                break;
+            case "human":
+                displayName = "You";
+                break;
+            case "system":
+                displayName = "System";
+                break;
+            default:
+                break;
+        }
+
+        return displayName;
+    }
 
     useEffect(()=> {
         const getMessages = async () => {
@@ -17,11 +42,13 @@ const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ conv
     },[conversation]);
 
     const messageLogItems = messages.map((msg, index) => {
-        if(msg._getType() !== "system") {
+        const messageType = msg._getType();
+        if(messageType !== "system") {
+            const displayName = getDisplayName(messageType); 
             return (
-                <article key={index}>
-                    <span>{msg.name} : </span>
-                    <span>{msg.content}</span>
+                <article className="message_item" key={index}>
+                    <span className="sender">{displayName}</span>
+                    <span className="content">{msg.content}</span>
                 </article>
             )
         }
