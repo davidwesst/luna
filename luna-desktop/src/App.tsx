@@ -4,8 +4,9 @@ import "./App.css";
 
 import ConversationOutput from "./components/conversation-output";
 import ConversationInputForm from "./components/conversation-input-form";
+import { toaster as ConversationToaster } from "./components/conversation-toaster";
 
-import { Button, Drawer, FormGroup, InputGroup, Slider } from "@blueprintjs/core";
+import { Button, Drawer, FormGroup, InputGroup, OverlayToaster, Slider } from "@blueprintjs/core";
 
 import { ConversationChain } from "langchain/chains";
 import { BaseMessage, HumanMessage, SystemMessage } from "langchain/schema";
@@ -20,27 +21,40 @@ function App() {
   
   const [showConfigDialogue, setShowConfigDialogue] = useState(false);
   const [openaiApiKey, setOpenaiApiKey] = useState("");
-  const [temperature, setTemperature] = useState(1.3);
+  const [temperature, setTemperature] = useState(1.2);
 
   const handleSendMessage = async (message: string) => {
-    // send the message to OpenAI
-    const model = new OpenAI({
-      openAIApiKey: openaiApiKey,
-      temperature: temperature
-    });
+    try {
+      // send the message to OpenAI
+      const model = new OpenAI({
+        openAIApiKey: openaiApiKey,
+        temperature: temperature
+      });
 
-    const memory = new BufferMemory({
-      chatHistory: new ChatMessageHistory(conversationMessages)
-    });
-    const chain = new ConversationChain({ llm: model, memory: memory });
+      if(openaiApiKey) {
+        const memory = new BufferMemory({
+          chatHistory: new ChatMessageHistory(conversationMessages)
+        });
 
-    // update UI state to display message that was submitted
-    setConversationMessages(conversationMessages.concat(new HumanMessage(message)));
+        const chain = new ConversationChain({ llm: model, memory: memory });
 
-    // update it again with the response when it returns
-    await chain.run(message);
-    const updatedMessages = await memory.chatHistory.getMessages();
-    setConversationMessages(new Array<BaseMessage>(...updatedMessages)); 
+        // update UI state to display message that was submitted
+        setConversationMessages(conversationMessages.concat(new HumanMessage(message)));
+
+        // update it again with the response when it returns
+        await chain.run(message);
+        const updatedMessages = await memory.chatHistory.getMessages();
+        setConversationMessages(new Array<BaseMessage>(...updatedMessages));
+      }
+    }
+    catch(e: string | unknown) {
+      // console.error(e);
+      ConversationToaster.show({
+        message: `${e}`,
+        icon: "error",
+        intent: "danger"
+      })
+    }
   }
 
   const toggleConfigDialog = () => {
