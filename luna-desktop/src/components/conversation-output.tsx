@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, MutableRefObject, useEffect, useRef } from "react";
 import { BaseMessage, MessageType } from "langchain/schema";
 
 interface ConversationOutputProps {
@@ -6,6 +6,13 @@ interface ConversationOutputProps {
 }
 
 const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ messages } : ConversationOutputProps) => {
+
+    const bottomRef = useRef<HTMLDivElement>(null);
+
+    useEffect(()=> {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
+
     const getDisplayName = (messageType: MessageType) => {
         let displayName = "Unknown";
         switch (messageType) {
@@ -47,6 +54,7 @@ const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ mess
     return (
         <div id="conversation_output">
             {messageLogItems}
+            <div ref={bottomRef} className="bottom_ref" />
         </div>
     );
 });

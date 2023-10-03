@@ -57,11 +57,15 @@ html, body {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin: 0.5em 0;
-    padding: 0.5em;
+    padding: 1em;
+    min-height: 60px;
 }
 
 .message_item .sender {
     min-width: 100px;
     font-weight: bold;
+}
+
+.bottom_ref {
+    min-height: 60px;
 }
