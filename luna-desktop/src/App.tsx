@@ -72,24 +72,28 @@ function App() {
         onSend={handleSendMessage}
         />
       <Drawer isOpen={showConfigDialogue} onClose={toggleConfigDialog}>
-        <FormGroup
-          label="OpenAI API Key"
-          inline={false}
-          >
-          <InputGroup id="openai_api_key" 
-            placeholder="Enter OpenAI API Key"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setOpenaiApiKey(e.currentTarget.value)}/>
-        </FormGroup>
-        <FormGroup
-          label="Temperature"
-          inline={false}>
-            <Slider
-              min={0.0}
-              max={2.0}
-              stepSize={0.1}
-              onChange={(val: number) => setTemperature(val)}
-              value={temperature} />
-        </FormGroup>
+        <section className="config_panel">
+          <h2>Configuration</h2>
+          <FormGroup
+            label="OpenAI API Key"
+            inline={false}
+            >
+            <InputGroup id="openai_api_key" 
+              placeholder="Enter OpenAI API Key"
+              type="password"
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setOpenaiApiKey(e.currentTarget.value)}/>
+          </FormGroup>
+          <FormGroup
+            label="Temperature"
+            inline={false}>
+              <Slider
+                min={0.0}
+                max={2.0}
+                stepSize={0.1}
+                onChange={(val: number) => setTemperature(val)}
+                value={temperature} />
+          </FormGroup>
+        </section>
       </Drawer>
     </section>
   );

@@ -38,10 +38,6 @@ html, body {
     overflow: auto;
 }
 
-.container #conversation_output > *:nth-child(even) {
-    background-color: #93e1f4;
-}
-
 .container #conversation_input {
     height: 10vh;
 }
@@ -66,6 +62,14 @@ html, body {
     font-weight: bold;
 }
 
+.container #conversation_output > .message_item:nth-child(even) {
+    background-color: #93e1f4;
+}
+
 .bottom_ref {
     min-height: 60px;
+}
+
+.config_panel {
+    padding: 1.0em;
 }
