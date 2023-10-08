@@ -65,7 +65,10 @@ function App() {
   }
 
   const handleSaveConfigurationClick = async () => {
-    await configService.saveConfiguration();
+    await configService.saveConfiguration({
+      OpenAIAPIKey: openaiApiKey,
+      DefaultTemperature: temperature
+    });
   }
 
   useEffect(()=> {
@@ -100,7 +103,7 @@ function App() {
             onChange={(e: ChangeEvent<HTMLInputElement>) => setOpenaiApiKey(e.currentTarget.value)} />
         </FormGroup>
         <FormGroup
-          label="Temperature"
+          label="Default Temperature"
           inline={false}>
             <Slider
               min={0.0}
