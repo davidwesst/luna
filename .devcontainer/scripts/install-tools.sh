@@ -24,14 +24,12 @@ pip install openai
 
 # install prerequisites for tauri
 DEBIAN_FRONTEND=noninteractive sudo apt update -y
-DEBIAN_FRONTEND=noninteractive sudo apt install -y \
-    libwebkit2gtk-4.0-dev \
+DEBIAN_FRONTEND=noninteractive sudo apt install -y --fix-missing \
+    libwebkit2gtk-4.1-dev \
     build-essential \
     curl \
     wget \
     file \
     libssl-dev \
-    libgtk-3-dev \
     libayatana-appindicator3-dev \
-    librsvg2-dev \
-    libsoup2.4-1
+    librsvg2-dev
