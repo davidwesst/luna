@@ -1,5 +1,5 @@
-import { FunctionComponent, MutableRefObject, useEffect, useRef } from "react";
-import { BaseMessage, MessageType } from "langchain/schema";
+import { FunctionComponent, useEffect, useRef } from "react";
+import { BaseMessage, MessageType } from "@langchain/core/messages";
 
 interface ConversationOutputProps {
     messages: Array<BaseMessage>;
@@ -45,7 +45,7 @@ const ConversationOutput : FunctionComponent<ConversationOutputProps> = (({ mess
             return (
                 <article className="message_item" key={index}>
                     <span className="sender">{displayName}</span>
-                    <span className="content">{msg.content}</span>
+                    <span className="content">{msg.content.toString()}</span>
                 </article>
             )
         }

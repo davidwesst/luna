@@ -9,9 +9,9 @@ import { toaster as ConversationToaster } from "./components/conversation-toaste
 import { Button, Drawer, FormGroup, InputGroup,  Slider } from "@blueprintjs/core";
 
 import { ConversationChain } from "langchain/chains";
-import { BaseMessage, HumanMessage, SystemMessage } from "langchain/schema";
+import { BaseMessage, HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { BufferMemory, ChatMessageHistory } from "langchain/memory";
-import { OpenAI } from "langchain/llms/openai";
+import { OpenAI } from "@langchain/openai";
 import { IConfiguration } from "./models/configuration";
 import { IConfigurationService, WebStorageConfiguraionService } from "./services/configuration.service";
 
